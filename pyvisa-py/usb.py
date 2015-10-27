@@ -93,6 +93,7 @@ class USBSession(Session):
         term_char, _ = self.get_attribute(constants.VI_ATTR_TERMCHAR)
         term_char_en, _ = self.get_attribute(constants.VI_ATTR_TERMCHAR_EN)
 
+        self.interface.timeout = self.timeout
         return self._read(lambda: self.interface.read(count),
                           count,
                           lambda current: True, # USB always returns a complete message
@@ -114,6 +115,7 @@ class USBSession(Session):
 
         send_end, _ = self.get_attribute(constants.VI_ATTR_SEND_END_EN)
 
+        self.interface.timeout = self.timeout
         count = self.interface.write(data)
 
         return count, SUCCESS
